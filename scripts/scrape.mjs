@@ -94,9 +94,7 @@ async function getPage() {
   throw new Error("Could not read the page from any source");
 }
 async function main() {
-  const res = await fetch(URL, { headers: { "user-agent": "Mozilla/5.0 (compatible; tas-tracker/1.0)" } });
-  if (!res.ok) throw new Error("HTTP " + res.status);
-  const cur = parse(await res.text());
+    const cur = parse(await getPage());
 
   mkdirSync("site", { recursive: true });
   const prev = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : { history: [] };
