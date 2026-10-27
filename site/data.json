@@ -1,0 +1,60 @@
+{
+ "fetchedAt": "2026-10-27T10:28:06.139Z",
+ "updated": "2026-10-23",
+ "roundDate": "2026-10-23",
+ "oldest": "2026-09-28",
+ "s": {
+  "190": {
+   "invited": 38,
+   "gold": 7,
+   "second": 31,
+   "lowInv": 317,
+   "roi": 850,
+   "places": 902,
+   "lodged": 100,
+   "notLodged": 72,
+   "lowRoll": 416
+  },
+  "491": {
+   "invited": 32,
+   "gold": 2,
+   "second": 31,
+   "lowInv": 76,
+   "roi": 616,
+   "places": 670,
+   "lodged": 76,
+   "notLodged": 72,
+   "lowRoll": 81
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-23",
+   "roundDate": "2026-10-23",
+   "s": {
+    "190": {
+     "invited": 38,
+     "gold": 7,
+     "second": 31,
+     "lowInv": 317,
+     "roi": 850,
+     "places": 902,
+     "lodged": 100,
+     "notLodged": 72,
+     "lowRoll": 416
+    },
+    "491": {
+     "invited": 32,
+     "gold": 2,
+     "second": 31,
+     "lowInv": 76,
+     "roi": 616,
+     "places": 670,
+     "lodged": 76,
+     "notLodged": 72,
+     "lowRoll": 81
+    }
+   }
+  }
+ ]
+}

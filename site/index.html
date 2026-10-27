@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b2a3c">
+<title>Tasmania Migration Tracker</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f3f6f9;--card:#fff;--ink:#0f1b2d;--mute:#5d6b7a;--line:#e2e8ee;--track:#e9eef3;--hd:#0b2a3c;--hdink:#fff;
+--gold:#d99a00;--green:#2f9e6d;--blue:#4c78c2;--c190:#0b7285;--c491:#5f3dc4;--ac:var(--c190);--shadow:0 1px 2px rgba(15,27,45,.06),0 4px 14px rgba(15,27,45,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0a1218;--card:#131e27;--ink:#e9eff4;--mute:#92a3b1;--line:#22313c;--track:#1d2b35;--hd:#0f1f2b;--gold:#f0b429;--green:#4cc38a;--blue:#7ea4e0;--c190:#3dc1d3;--c491:#9b87f5;--shadow:none}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0a1218;--card:#131e27;--ink:#e9eff4;--mute:#92a3b1;--line:#22313c;--track:#1d2b35;--hd:#0f1f2b;--gold:#f0b429;--green:#4cc38a;--blue:#7ea4e0;--c190:#3dc1d3;--c491:#9b87f5;--shadow:none}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:radial-gradient(600px 340px at 105% 0,color-mix(in srgb,var(--c491) 13%,transparent),transparent) fixed,radial-gradient(560px 340px at -8% 30%,color-mix(in srgb,var(--c190) 13%,transparent),transparent) fixed,var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--hd);z-index:10}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:linear-gradient(135deg,var(--hd),color-mix(in srgb,var(--hd) 80%,#3a2fa0));color:var(--hdink);padding:14px 16px 16px;border-radius:0 0 24px 24px;box-shadow:0 12px 28px rgba(6,20,32,.28)}
+.top{display:flex;align-items:center;gap:12px}
+.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#19b3c8,#5f3dc4);display:grid;place-items:center;font-weight:800;font-size:13px;letter-spacing:.04em;box-shadow:0 0 0 3px rgba(255,255,255,.12),0 6px 16px rgba(25,179,200,.4)}
+.top h1{font-size:18px;margin:0;line-height:1.15;letter-spacing:-.01em}
+.top p{margin:2px 0 0;font-size:12.5px;opacity:.75}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:14px;background:rgba(255,255,255,.1);border-radius:14px;padding:4px}
+.seg button{border:0;background:transparent;color:var(--hdink);font:600 15px/1 inherit;font-family:inherit;min-height:44px;border-radius:11px;opacity:.75;cursor:pointer}
+.seg button[aria-selected="true"]{background:var(--card);color:var(--ink);opacity:1;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+main{max-width:640px;margin:0 auto;padding:16px 16px 40px;display:grid;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+.card h2{font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);margin:0 0 4px;font-weight:700}
+.card h2::before{content:"";display:inline-block;width:8px;height:8px;border-radius:3px;background:var(--ac);margin-right:8px;vertical-align:1px}
+.hint{margin:0 0 14px;font-size:14px;color:var(--mute)}
+.hero{position:relative;overflow:hidden;background:linear-gradient(150deg,color-mix(in srgb,var(--ac) 80%,#000),color-mix(in srgb,var(--ac) 35%,#000));color:#fff;border:0;box-shadow:0 14px 30px color-mix(in srgb,var(--ac) 35%,transparent)}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.1)}
+.hero::before{width:220px;height:220px;right:-70px;top:-90px}
+.hero::after{width:130px;height:130px;right:50px;bottom:-70px;background:rgba(255,255,255,.06)}
+.hero>*{position:relative}
+.hero h2::before{background:#fff}
+.hero h2{color:rgba(255,255,255,.8)}
+.hero .num{font-size:76px;font-weight:800;letter-spacing:-.045em;line-height:1;text-shadow:0 4px 20px rgba(0,0,0,.25)}
+.hero .num small{font-size:16px;font-weight:600;letter-spacing:0;margin-left:8px;opacity:.85}
+.stack{display:flex;gap:3px;height:34px;margin:16px 0 10px}
+.stack div{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;border-radius:9px;min-width:34px}
+.lg{display:flex;gap:16px;font-size:13.5px;opacity:.95;flex-wrap:wrap}
+.lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:baseline}
+.warn{margin-top:12px;font-size:12.5px;opacity:.85;background:rgba(0,0,0,.18);padding:8px 10px;border-radius:10px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
+.tile::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--ac),color-mix(in srgb,var(--ac) 30%,#fff))}
+.ico{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:var(--ac);background:color-mix(in srgb,var(--ac) 14%,transparent)}
+.ico svg{width:20px;height:20px}
+.tile b{display:block;font-size:34px;font-weight:800;margin-top:10px;letter-spacing:-.035em;line-height:1.05;color:var(--ink);font-variant-numeric:tabular-nums}
+.tile span{font-size:13.5px;color:var(--mute);line-height:1.3;display:block;margin-top:2px}
+.donut{display:flex;align-items:center;gap:18px}
+.donut svg{width:150px;height:150px;flex:none;transform:rotate(-90deg)}
+.donut circle{fill:none;stroke-width:16;transition:stroke-dasharray .9s cubic-bezier(.2,.8,.2,1)}
+.dc{position:relative;flex:none}
+.dc div{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.dc b{font-size:30px;letter-spacing:-.03em;line-height:1}
+.dc span{font-size:12px;color:var(--mute)}
+.dl{display:grid;gap:10px;font-size:14.5px;flex:1}
+.dl div{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.dl i{display:inline-block;width:11px;height:11px;border-radius:4px;margin-right:8px}
+.dl b{font-variant-numeric:tabular-nums}
+.bar{margin:14px 0 0}
+.bl{display:flex;justify-content:space-between;font-size:14.5px;margin-bottom:6px}
+.bl b{font-variant-numeric:tabular-nums}
+.tr{height:16px;border-radius:8px;background:var(--track);overflow:hidden}
+.fl{height:100%;border-radius:8px;width:0;background:linear-gradient(90deg,color-mix(in srgb,var(--ac) 65%,#fff),var(--ac));transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.fl.soft{opacity:.35}
+.delta{margin-top:14px;padding:10px 12px;border-radius:12px;background:var(--track);font-size:14px}
+.date{display:inline-block;font-size:26px;font-weight:800;letter-spacing:-.02em;color:var(--ac);padding:8px 16px;border-radius:14px;background:color-mix(in srgb,var(--ac) 12%,transparent)}
+.cmp{width:100%;border-collapse:collapse;font-size:14.5px}
+.cmp th,.cmp td{padding:11px 4px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.cmp th:first-child,.cmp td:first-child{text-align:left;color:var(--mute);font-weight:500}
+.cmp thead th{font-size:12.5px;text-transform:uppercase;letter-spacing:.06em}
+.cmp tr:last-child td{border-bottom:0}
+.c190{color:var(--c190)}.c491{color:var(--c491)}
+footer{font-size:12.5px;color:var(--mute);text-align:center;padding:4px 8px}
+footer a{color:inherit}
+.fade{animation:in .45s cubic-bezier(.2,.8,.2,1) both}
+#view>:nth-child(2){animation-delay:.07s}#view>:nth-child(3){animation-delay:.14s}#view>:nth-child(4){animation-delay:.21s}#view>:nth-child(5){animation-delay:.28s}#view>:nth-child(6){animation-delay:.35s}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}.fl,.donut circle{transition:none}}
+@media (max-width:360px){.donut{flex-direction:column;align-items:flex-start}.hero .num{font-size:54px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><div class="logo">TAS</div><div><h1>Migration Tracker</h1><p>Skilled nomination · updated <span id="upd"></span></p></div></div>
+  <div class="seg" role="tablist" aria-label="Visa subclass">
+    <button role="tab" data-k="190" aria-selected="true">Subclass 190</button>
+    <button role="tab" data-k="491" aria-selected="false">Subclass 491</button>
+  </div>
+</header>
+<main id="view"></main>
+<main style="padding-top:0">
+  <div class="card"><h2>Side by side</h2><p class="hint">Both subclasses at a glance.</p><table class="cmp" id="cmp"></table></div>
+  <footer><div id="status" style="margin-bottom:6px;font-weight:600"></div>Data is read automatically from the <a href="https://www.migration.tas.gov.au/news/processing_times_and_allocation_usage" target="_blank" rel="noopener">Migration Tasmania</a> page. Not official advice; check the source for the latest figures.</footer>
+</main>
+
+<script>
+const D={updated:"2026-10-23",oldest:"2026-09-28",
+ "190":{ac:"var(--c190)",invited:38,round:[["Gold",7,"#e0a800"],["Green",31,"#34b27b"]],lowInv:317,lowRoll:416,roi:850,places:902,lodged:100,notLodged:72},
+ "491":{ac:"var(--c491)",invited:32,round:[["Gold",2,"#e0a800"],["Further",31,"#6f9be0"]],lowInv:76,lowRoll:81,roi:616,places:670,lodged:76,notLodged:72}};
+D.round="2026-10-23";D.history=[];
+const $=i=>document.getElementById(i);
+const ds=s=>new Date(s+"T00:00:00Z").toLocaleDateString("en-AU",{day:"numeric",month:"short",timeZone:"UTC"});
+const fd=s=>new Date(s+"T00:00:00Z").toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"});
+$("upd").textContent=ds(D.updated);
+
+function applyData(j){D.updated=j.updated;D.oldest=j.oldest;D.round=j.roundDate;D.history=j.history||[];
+ for(const k of ["190","491"]){const s=j.s[k],d=D[k];Object.assign(d,{invited:s.invited,lowInv:s.lowInv,lowRoll:s.lowRoll,roi:s.roi,places:s.places,lodged:s.lodged,notLodged:s.notLodged});d.round[0][1]=s.gold;d.round[1][1]=s.second}}
+function spark(h,k,f){const v=h.map(e=>e.s[k][f]);if(v.length<2)return"";const mn=Math.min(...v),mx=Math.max(...v),r=mx-mn||1,W=300,H=70;
+ const p=v.map((y,i)=>[i/(v.length-1)*W,H-8-(y-mn)/r*(H-16)]);const d=p.map((q,i)=>(i?"L":"M")+q[0].toFixed(1)+" "+q[1].toFixed(1)).join("");
+ return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:70px;display:block;overflow:visible"><path d="${d}" fill="none" stroke="var(--ac)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${p.at(-1)[0]}" cy="${p.at(-1)[1]}" r="4.5" fill="var(--ac)"/></svg>`}
+function bar(label,val,max,soft){return `<div class="bar"><div class="bl"><span>${label}</span><b>${val}</b></div><div class="tr"><div class="fl${soft?" soft":""}" data-w="${val/max*100}"></div></div></div>`}
+
+const I={pin:'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/>',users:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.9M16 3.1a4 4 0 010 7.8"/>',clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',send:'<path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>'};
+const tile=(i,n,l)=>`<div class="tile"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${I[i]}</svg></div><b data-n="${n}">${n}</b><span>${l}</span></div>`;
+function countUp(){document.querySelectorAll("[data-n]").forEach(e=>{const t=+e.dataset.n,t0=performance.now();(function f(now){const p=Math.min((now-t0)/800,1);e.textContent=Math.round(t*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)})}
+function render(k){
+ const s=D[k],tot=s.round.reduce((a,b)=>a+b[1],0),used=s.lodged+s.notLodged,free=s.places-used;
+ const C=2*Math.PI*58,seg=v=>v/s.places*C;
+ const asOf=Math.round((Date.parse(D.updated)-Date.parse(D.oldest))/864e5);
+ const ago=Math.round((Date.now()-Date.parse(D.oldest))/864e5);
+ const diff=s.lowInv-s.lowRoll,m=Math.max(s.lowInv,s.lowRoll)*1.05;
+ const mismatch=tot!==s.invited?`<div class="warn">The source lists ${tot} invitations in the breakdown but ${s.invited} in total. Figures are shown as published.</div>`:"";
+ $("view").style.setProperty("--ac",s.ac);
+ $("view").innerHTML=`
+ <section class="card hero fade"><h2>Latest invitation round · ${ds(D.round)}</h2>
+  <div class="num"><span data-n="${s.invited}">${s.invited}</span><small>invitations</small></div>
+  <div class="stack">${s.round.map(r=>`<div style="flex:${r[1]};background:${r[2]}">${r[1]}</div>`).join("")}</div>
+  <div class="lg">${s.round.map(r=>`<span><i style="background:${r[2]}"></i>${r[0]}</span>`).join("")}</div>${mismatch}</section>
+
+ <section class="tiles fade">
+  ${tile("pin",s.places,"Nomination places available")}
+  ${tile("users",s.roi,"ROIs waiting in the pool")}
+  ${tile("clock",s.lodged,"Applications awaiting a decision")}
+  ${tile("send",s.notLodged,"Invited, not yet lodged")}
+ </section>
+
+ <section class="card fade"><h2>Place usage</h2><p class="hint">How much of the nomination allocation is already tied up.</p>
+  <div class="donut"><div class="dc"><svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="58" stroke="var(--track)"/>
+   <circle id="d2" cx="70" cy="70" r="58" stroke="var(--ac)" stroke-opacity=".45" stroke-dasharray="0 ${C}" stroke-dashoffset="${-seg(s.lodged)}"/>
+   <circle id="d1" cx="70" cy="70" r="58" stroke="var(--ac)" stroke-dasharray="0 ${C}"/></svg>
+   <div><b>${Math.round(free/s.places*100)}%</b><span>free</span></div></div>
+   <div class="dl"><div><span><i style="background:var(--ac)"></i>Lodged</span><b>${s.lodged}</b></div>
+   <div><span><i style="background:var(--ac);opacity:.45"></i>Invited</span><b>${s.notLodged}</b></div>
+   <div><span><i style="background:var(--track);border:1px solid var(--line)"></i>Free</span><b>${free}</b></div></div></div>
+  <div class="note" style="font-size:12.5px;color:var(--mute);margin-top:12px">Free = places minus lodged and invited. My own estimate, not an official figure.</div></section>
+
+ <section class="card fade"><h2>Pipeline</h2><p class="hint">From the ROI pool to nomination places.</p>
+  ${bar("Places available",s.places,s.places,1)}${bar("ROIs in pool",s.roi,s.places)}${bar("Awaiting decision",s.lodged,s.places)}${bar("Invited, not lodged",s.notLodged,s.places)}</section>
+
+ <section class="card fade"><h2>Score needed</h2><p class="hint">Lowest points that received an invitation.</p>
+  ${bar("This round",s.lowInv+" pts",1,0).replace(/data-w="[^"]*"/,`data-w="${s.lowInv/m*100}"`)}
+  ${bar("3-month rolling",s.lowRoll+" pts",1,1).replace(/data-w="[^"]*"/,`data-w="${s.lowRoll/m*100}"`)}
+  <div class="delta">This round’s lowest score was <b>${Math.abs(diff)} points ${diff<0?"below":"above"}</b> the rolling figure.</div></section>
+
+ <section class="card fade"><h2>Oldest waiting application</h2><p class="hint">Lodged and not yet given to a case officer.</p>
+  <div class="date">${fd(D.oldest)}</div>
+  <div class="delta">${asOf} days at last update · ${ago} days ago today</div></section>
+ ${D.history.length>1?`<section class="card fade"><h2>Trends</h2><p class="hint">${ds(D.history[0].date)} to ${ds(D.history.at(-1).date)}, one point per change.</p>
+  <div class="bl"><span>Lowest invited score</span><b>${s.lowInv}</b></div>${spark(D.history,k,"lowInv")}
+  <div class="bl" style="margin-top:14px"><span>ROIs in pool</span><b>${s.roi}</b></div>${spark(D.history,k,"roi")}</section>`:""}`;
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{
+  document.querySelectorAll(".fl").forEach(e=>e.style.width=e.dataset.w+"%");
+  if(!matchMedia("(prefers-reduced-motion:reduce)").matches)countUp();
+  $("d1").setAttribute("stroke-dasharray",`${seg(s.lodged)} ${C}`);
+  $("d2").setAttribute("stroke-dasharray",`${seg(s.notLodged)} ${C}`);
+  $("d2").setAttribute("stroke-dashoffset",-seg(s.lodged));
+ }));
+}
+
+const rows=[["Invited (round)","invited"],["Places","places"],["ROIs in pool","roi"],["Awaiting decision","lodged"],["Invited, not lodged","notLodged"],["Lowest score, round","lowInv"],["Lowest, 3-mo avg","lowRoll"]];
+const buildCmp=()=>$("cmp").innerHTML=`<thead><tr><th></th><th class="c190">190</th><th class="c491">491</th></tr></thead><tbody>`+rows.map(r=>`<tr><td>${r[0]}</td><td><b>${D["190"][r[1]]}</b></td><td><b>${D["491"][r[1]]}</b></td></tr>`).join("")+`</tbody>`;
+
+function pick(k){
+ document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-selected",b.dataset.k===k));
+ render(k);
+ try{localStorage.setItem("tas-k",k)}catch(e){}
+}
+document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{pick(b.dataset.k);window.scrollTo({top:0,behavior:"smooth"})});
+let k0="190";try{k0=localStorage.getItem("tas-k")||"190"}catch(e){}
+buildCmp();
+pick(D[k0]?k0:"190");
+fetch("data.json?v="+Date.now()).then(r=>r.ok?r.json():Promise.reject()).then(j=>{applyData(j);$("upd").textContent=ds(D.updated);buildCmp();
+ $("status").textContent="Auto-updated from the source site · last change picked up "+new Date(j.fetchedAt).toLocaleString("en-AU",{dateStyle:"medium",timeStyle:"short"});
+ pick(document.querySelector('.seg [aria-selected="true"]').dataset.k)}).catch(()=>{$("status").textContent="Offline: showing the last saved numbers"});
+</script>
+</body>
+</html>
