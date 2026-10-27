@@ -71,7 +71,28 @@ export function parse(html) {
     : roundDate;
   return { updated, roundDate, oldest, s };
 }
-
+async function getPage() {
+  const tries = [
+    [URL, {
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+      accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+      "accept-language": "en-AU,en;q=0.9",
+    }],
+    ["https://r.jina.ai/" + URL, { accept: "text/plain" }],
+  ];
+  for (const [u, headers] of tries) {
+    try {
+      const res = await fetch(u, { headers });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const text = await res.text();
+      parse(text);
+      return text;
+    } catch (e) {
+      console.log("Source failed:", u, "-", e.message);
+    }
+  }
+  throw new Error("Could not read the page from any source");
+}
 async function main() {
   const res = await fetch(URL, { headers: { "user-agent": "Mozilla/5.0 (compatible; tas-tracker/1.0)" } });
   if (!res.ok) throw new Error("HTTP " + res.status);
