@@ -1,29 +1,29 @@
 {
- "fetchedAt": "2026-11-04T23:37:34.024Z",
- "updated": "2026-11-05",
- "roundDate": "2026-11-05",
- "oldest": "2026-09-29",
+ "fetchedAt": "2026-11-12T00:37:28.047Z",
+ "updated": "2026-11-12",
+ "roundDate": "2026-11-12",
+ "oldest": "2026-10-20",
  "s": {
   "190": {
-   "invited": 68,
-   "gold": 11,
-   "second": 57,
-   "lowInv": 315,
-   "roi": 769,
-   "places": 828,
-   "lodged": 94,
-   "notLodged": 119,
+   "invited": 28,
+   "gold": 5,
+   "second": 23,
+   "lowInv": 313,
+   "roi": 748,
+   "places": 792,
+   "lodged": 99,
+   "notLodged": 102,
    "lowRoll": 0
   },
   "491": {
-   "invited": 28,
-   "gold": 1,
-   "second": 27,
-   "lowInv": 74,
-   "roi": 631,
-   "places": 628,
-   "lodged": 84,
-   "notLodged": 62,
+   "invited": 38,
+   "gold": 2,
+   "second": 36,
+   "lowInv": 71,
+   "roi": 608,
+   "places": 604,
+   "lodged": 81,
+   "notLodged": 70,
    "lowRoll": 0
   }
  },
@@ -108,6 +108,34 @@
      "places": 628,
      "lodged": 84,
      "notLodged": 62,
+     "lowRoll": 0
+    }
+   }
+  },
+  {
+   "date": "2026-11-12",
+   "roundDate": "2026-11-12",
+   "s": {
+    "190": {
+     "invited": 28,
+     "gold": 5,
+     "second": 23,
+     "lowInv": 313,
+     "roi": 748,
+     "places": 792,
+     "lodged": 99,
+     "notLodged": 102,
+     "lowRoll": 0
+    },
+    "491": {
+     "invited": 38,
+     "gold": 2,
+     "second": 36,
+     "lowInv": 71,
+     "roi": 608,
+     "places": 604,
+     "lodged": 81,
+     "notLodged": 70,
      "lowRoll": 0
     }
    }
